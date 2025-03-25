@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 
 const NFLPlayerRanking = () => {
@@ -91,12 +92,23 @@ const NFLPlayerRanking = () => {
     setSelectedPlayers(newSelectedPlayers);
   };
 
-  const filteredPlayers = searchTerm 
-    ? players.filter(player => 
-        player.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        player.lastName.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    : players;
+  // Filter players based on search term and exclude already selected players
+  const filteredPlayers = players
+    .filter(player => {
+      // Check if the player is already selected
+      const isAlreadySelected = selectedPlayers.some(
+        selectedPlayer => selectedPlayer && 
+        selectedPlayer.firstName === player.firstName && 
+        selectedPlayer.lastName === player.lastName
+      );
+      
+      // Only include the player if not already selected and matches search term (if any)
+      return !isAlreadySelected && 
+        (!searchTerm || 
+          player.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          player.lastName.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    });
 
   const handleDragStart = (e, index) => {
     setDraggedIndex(index);
@@ -110,14 +122,25 @@ const NFLPlayerRanking = () => {
     setDragOverIndex(index);
   };
 
+  // Modified to shift boxes instead of swapping them
   const handleDrop = (e, index) => {
     e.preventDefault();
     
     if (draggedIndex === null || draggedIndex === index) return;
     
     const newSelectedPlayers = [...selectedPlayers];
-    [newSelectedPlayers[draggedIndex], newSelectedPlayers[index]] = 
-    [newSelectedPlayers[index], newSelectedPlayers[draggedIndex]];
+    const draggedItem = newSelectedPlayers[draggedIndex];
+    
+    // Remove the dragged item first
+    newSelectedPlayers.splice(draggedIndex, 1);
+    
+    // Insert it at the new position
+    newSelectedPlayers.splice(index, 0, draggedItem);
+    
+    // If we have more than 10 items after the move, remove the extra ones
+    if (newSelectedPlayers.length > 10) {
+      newSelectedPlayers.length = 10;
+    }
     
     setSelectedPlayers(newSelectedPlayers);
     setDraggedIndex(null);
@@ -224,4 +247,3 @@ const NFLPlayerRanking = () => {
 };
 
 export default NFLPlayerRanking;
-
