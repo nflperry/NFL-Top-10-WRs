@@ -246,4 +246,5 @@ const NFLPlayerRanking = () => {
   );
 };
 
+// Export as a standalone component
 export default NFLPlayerRanking;
