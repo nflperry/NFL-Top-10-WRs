@@ -156,91 +156,104 @@ const NFLPlayerRanking = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#121212] flex justify-center pt-10">
-      <div className="w-11/12 max-w-[500px]">
-        {Array.from({ length: 10 }, (_, i) => (
-          <div 
-            key={i}
-            className={`flex items-center mb-2 cursor-move row ${dragOverIndex === i ? 'border-2 border-white' : ''}`}
-            draggable={selectedPlayers[i] !== null}
-            onDragStart={(e) => handleDragStart(e, i)}
-            onDragOver={(e) => handleDragOver(e, i)}
-            onDrop={(e) => handleDrop(e, i)}
-            onDragEnd={handleDragEnd}
-          >
-            <div className="flex-shrink-0 w-[75px] h-[75px] bg-[#FCAB1E] text-[#121212] flex items-center justify-center text-4xl font-bold">
-              {i + 1}
-            </div>
-            
+    <div 
+      className="min-h-screen pt-[100px] pb-10 relative"
+      style={{
+        backgroundImage: `url('/lovable-uploads/a22857fa-8f67-4ad7-8467-2dd7cc598e97.png')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: '#121212'
+      }}
+    >
+      <div className="container mx-auto px-4">
+        <h1 className="text-4xl md:text-5xl font-bold text-center text-[#FCAB1E] mb-8 mt-4">TOP 10 WRS</h1>
+        
+        <div className="w-full max-w-[500px] mx-auto">
+          {Array.from({ length: 10 }, (_, i) => (
             <div 
-              className={`flex-1 h-[75px] border-2 border-white ml-2 mr-2 relative flex items-center ${
-                selectedPlayers[i] ? 'selected' : ''
-              }`}
-              style={{ 
-                backgroundColor: selectedPlayers[i] ? selectedPlayers[i].color : 'transparent',
-                cursor: selectedPlayers[i] ? 'move' : 'pointer',
-                position: 'relative'
-              }}
-              onClick={selectedPlayers[i] ? undefined : () => toggleInput(i)}
+              key={i}
+              className={`flex items-center mb-2 cursor-move row ${dragOverIndex === i ? 'border-2 border-white' : ''}`}
+              draggable={selectedPlayers[i] !== null}
+              onDragStart={(e) => handleDragStart(e, i)}
+              onDragOver={(e) => handleDragOver(e, i)}
+              onDrop={(e) => handleDrop(e, i)}
+              onDragEnd={handleDragEnd}
             >
-              {selectedPlayers[i] ? (
-                <div className="flex items-center px-3 w-full">
-                  <img 
-                    src={`https://static.www.nfl.com/t_q-best/league/api/clubs/logos/${selectedPlayers[i].logo}`}
-                    alt={`${selectedPlayers[i].firstName} ${selectedPlayers[i].lastName}`}
-                    className="h-[60px] w-auto mr-3 flex-shrink-0"
-                  />
-                  <div className="text-white font-bold flex flex-col">
-                    <div className="text-2xl leading-tight">{selectedPlayers[i].firstName.toUpperCase()}</div>
-                    <div className="text-2xl leading-tight">{selectedPlayers[i].lastName.toUpperCase()}</div>
-                  </div>
-                  <button 
-                    className="absolute top-1 right-1 text-white bg-transparent border-none text-xl cursor-pointer"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      removePlayer(i);
-                    }}
-                  >
-                    X
-                  </button>
-                </div>
-              ) : (
-                <div className="pl-5 text-white">+ Select Player</div>
-              )}
+              <div className="flex-shrink-0 w-[75px] h-[75px] bg-[#FCAB1E] text-[#121212] flex items-center justify-center text-4xl font-bold">
+                {i + 1}
+              </div>
               
-              {activeBox === i && (
-                <>
-                  <input
-                    ref={searchInputRef}
-                    type="text"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="absolute top-2 left-[5%] w-[90%] p-2 border border-gray-300 rounded-md bg-white text-black z-10"
-                    placeholder="Search Player..."
-                    autoFocus
-                  />
-                  
-                  {showDropdown && (
-                    <div 
-                      ref={dropdownRef}
-                      className="absolute top-[40px] left-[5%] w-[90%] max-h-[200px] overflow-y-auto border border-gray-300 rounded-md bg-white z-10"
-                    >
-                      {filteredPlayers.map((player, playerIndex) => (
-                        <div 
-                          key={playerIndex}
-                          className="p-2 hover:bg-gray-100 cursor-pointer text-black"
-                          onClick={() => selectPlayer(player, i)}
-                        >
-                          {player.firstName} {player.lastName}
-                        </div>
-                      ))}
+              <div 
+                className={`flex-1 h-[75px] border-2 border-white ml-2 mr-2 relative flex items-center ${
+                  selectedPlayers[i] ? 'selected' : ''
+                }`}
+                style={{ 
+                  backgroundColor: selectedPlayers[i] ? selectedPlayers[i].color : 'transparent',
+                  cursor: selectedPlayers[i] ? 'move' : 'pointer',
+                  position: 'relative'
+                }}
+                onClick={selectedPlayers[i] ? undefined : () => toggleInput(i)}
+              >
+                {selectedPlayers[i] ? (
+                  <div className="flex items-center px-3 w-full">
+                    <img 
+                      src={`https://static.www.nfl.com/t_q-best/league/api/clubs/logos/${selectedPlayers[i].logo}`}
+                      alt={`${selectedPlayers[i].firstName} ${selectedPlayers[i].lastName}`}
+                      className="h-[60px] w-auto mr-3 flex-shrink-0"
+                    />
+                    <div className="text-white font-bold flex flex-col">
+                      <div className="text-2xl leading-tight">{selectedPlayers[i].firstName.toUpperCase()}</div>
+                      <div className="text-2xl leading-tight">{selectedPlayers[i].lastName.toUpperCase()}</div>
                     </div>
-                  )}
-                </>
-              )}
+                    <button 
+                      className="absolute top-1 right-1 text-white bg-transparent border-none text-xl cursor-pointer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        removePlayer(i);
+                      }}
+                    >
+                      X
+                    </button>
+                  </div>
+                ) : (
+                  <div className="pl-5 text-white">+ Select Player</div>
+                )}
+                
+                {activeBox === i && (
+                  <>
+                    <input
+                      ref={searchInputRef}
+                      type="text"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="absolute top-2 left-[5%] w-[90%] p-2 border border-gray-300 rounded-md bg-white text-black z-10"
+                      placeholder="Search Player..."
+                      autoFocus
+                    />
+                    
+                    {showDropdown && (
+                      <div 
+                        ref={dropdownRef}
+                        className="absolute top-[40px] left-[5%] w-[90%] max-h-[200px] overflow-y-auto border border-gray-300 rounded-md bg-white z-10"
+                      >
+                        {filteredPlayers.map((player, playerIndex) => (
+                          <div 
+                            key={playerIndex}
+                            className="p-2 hover:bg-gray-100 cursor-pointer text-black"
+                            onClick={() => selectPlayer(player, i)}
+                          >
+                            {player.firstName} {player.lastName}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
