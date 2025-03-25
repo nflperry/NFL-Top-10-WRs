@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 
 const NFLPlayerRanking = () => {
@@ -41,23 +40,15 @@ const NFLPlayerRanking = () => {
     { firstName: 'Drake', lastName: 'London', team: 'ATL', color: '#A5ACAF', logo: 'ATL' }
   ];
 
-  // State for tracking selected players in each position
   const [selectedPlayers, setSelectedPlayers] = useState(Array(10).fill(null));
-  
-  // State for tracking which box is being dragged
   const [draggedIndex, setDraggedIndex] = useState(null);
   const [dragOverIndex, setDragOverIndex] = useState(null);
-  
-  // State for handling the search input and dropdown
   const [activeBox, setActiveBox] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
-  
-  // Refs for click outside handling
   const dropdownRef = useRef(null);
   const searchInputRef = useRef(null);
 
-  // Handle clicking outside of search input and dropdown
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -79,14 +70,12 @@ const NFLPlayerRanking = () => {
     };
   }, [activeBox]);
 
-  // Toggle search input field
   const toggleInput = (boxIndex) => {
     setActiveBox(boxIndex);
     setShowDropdown(true);
     setSearchTerm('');
   };
 
-  // Handle selecting a player from the dropdown
   const selectPlayer = (player, boxIndex) => {
     const newSelectedPlayers = [...selectedPlayers];
     newSelectedPlayers[boxIndex] = player;
@@ -96,14 +85,12 @@ const NFLPlayerRanking = () => {
     setSearchTerm('');
   };
 
-  // Handle removing a player
   const removePlayer = (boxIndex) => {
     const newSelectedPlayers = [...selectedPlayers];
     newSelectedPlayers[boxIndex] = null;
     setSelectedPlayers(newSelectedPlayers);
   };
 
-  // Filter players based on search term
   const filteredPlayers = searchTerm 
     ? players.filter(player => 
         player.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -111,30 +98,24 @@ const NFLPlayerRanking = () => {
       )
     : players;
 
-  // Handle drag start
   const handleDragStart = (e, index) => {
     setDraggedIndex(index);
-    // This makes the dragged element semi-transparent
     if (e.target.classList.contains('row')) {
       e.target.style.opacity = '0.4';
     }
   };
 
-  // Handle drag over
   const handleDragOver = (e, index) => {
     e.preventDefault();
     setDragOverIndex(index);
   };
 
-  // Handle drop
   const handleDrop = (e, index) => {
     e.preventDefault();
     
-    // If we're not dragging anything or dropping onto the same spot, do nothing
     if (draggedIndex === null || draggedIndex === index) return;
     
     const newSelectedPlayers = [...selectedPlayers];
-    // Swap the players
     [newSelectedPlayers[draggedIndex], newSelectedPlayers[index]] = 
     [newSelectedPlayers[index], newSelectedPlayers[draggedIndex]];
     
@@ -143,9 +124,7 @@ const NFLPlayerRanking = () => {
     setDragOverIndex(null);
   };
 
-  // Handle drag end
   const handleDragEnd = (e) => {
-    // Reset opacity of the dragged element
     if (e.target.classList.contains('row')) {
       e.target.style.opacity = '1';
     }
@@ -155,7 +134,7 @@ const NFLPlayerRanking = () => {
 
   return (
     <div className="min-h-screen bg-[#121212] flex justify-center pt-10">
-      <div className="w-4/5 max-w-3xl">
+      <div className="w-11/12 max-w-[500px]">
         {Array.from({ length: 10 }, (_, i) => (
           <div 
             key={i}
@@ -182,13 +161,13 @@ const NFLPlayerRanking = () => {
               onClick={selectedPlayers[i] ? undefined : () => toggleInput(i)}
             >
               {selectedPlayers[i] ? (
-                <div className="flex items-center px-5 w-full">
+                <div className="flex items-center px-3 w-full">
                   <img 
                     src={`https://static.www.nfl.com/t_q-best/league/api/clubs/logos/${selectedPlayers[i].logo}`}
                     alt={`${selectedPlayers[i].firstName} ${selectedPlayers[i].lastName}`}
-                    className="h-[60px] mr-4"
+                    className="h-[60px] w-auto mr-3 flex-shrink-0"
                   />
-                  <div className="text-white font-bold">
+                  <div className="text-white font-bold flex flex-col">
                     <div className="text-2xl leading-tight">{selectedPlayers[i].firstName.toUpperCase()}</div>
                     <div className="text-2xl leading-tight">{selectedPlayers[i].lastName.toUpperCase()}</div>
                   </div>
@@ -245,3 +224,4 @@ const NFLPlayerRanking = () => {
 };
 
 export default NFLPlayerRanking;
+
