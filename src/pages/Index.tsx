@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 
 const NFLPlayerRanking = () => {
@@ -112,9 +113,11 @@ const NFLPlayerRanking = () => {
     { firstName: 'James', lastName: 'Cook', team: 'BUF', color: '#00338D', logo: 'BUF' },
     { firstName: 'Chubba', lastName: 'Hubbard', team: 'CAR', color: '#0085CA', logo: 'CAR' },
     { firstName: 'Rico', lastName: 'Dowdle', team: 'CAR', color: '#0085CA', logo: 'CAR' },
-    { firstName: 'D\'Andre', lastName: 'Swift', team: 'CHI', color: '#0B162A', logo: 'CHI' },      { firstName: "Chase", lastName: 'Brown', team: 'CIN', color: 'black', logo: 'CIN' },
+    { firstName: 'D\'Andre', lastName: 'Swift', team: 'CHI', color: '#0B162A', logo: 'CHI' },
+    { firstName: "Chase", lastName: 'Brown', team: 'CIN', color: 'black', logo: 'CIN' },
     { firstName: 'Jerome', lastName: 'Ford', team: 'CLE', color: '#311D00', logo: 'CLE' },
-    { firstName: 'Javonte', lastName: 'Williams', team: 'DAL', color: '#041E42', logo: 'DAL' },      { firstName: 'Jaleel', lastName: 'McLaughlin', team: 'DEN', color: '#FB4F14', logo: 'DEN' },
+    { firstName: 'Javonte', lastName: 'Williams', team: 'DAL', color: '#041E42', logo: 'DAL' },
+    { firstName: 'Jaleel', lastName: 'McLaughlin', team: 'DEN', color: '#FB4F14', logo: 'DEN' },
     { firstName: 'Jahmyr', lastName: 'Gibbs', team: 'DET', color: '#0076B6', logo: 'DET' },
     { firstName: 'David', lastName: 'Montgomery', team: 'DET', color: '#0076B6', logo: 'DET' },
     { firstName: 'Josh', lastName: 'Jacobs', team: 'GB', color: '#203731', logo: 'GB' },
@@ -182,7 +185,6 @@ const NFLPlayerRanking = () => {
      { firstName: 'Cade', lastName: 'Otton', team: 'TB', color: '#D50A0A', logo: 'TB' },
      { firstName: 'Chig', lastName: 'Okonkwo', team: 'TEN', color: '#4B92DB', logo: 'TEN' },
      { firstName: 'Zach', lastName: 'Ertz', team: 'WAS', color: '#5A1414', logo: 'WAS' },      
-
   ];
 
   const [selectedPlayers, setSelectedPlayers] = useState(Array(10).fill(null));
